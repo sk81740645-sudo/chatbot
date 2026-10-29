@@ -4,357 +4,214 @@ const path = require("path");
 const app = express();
 
 const PORT = process.env.PORT || 10000;
+const GROQ_API_URL =
+  "https://api.groq.com/openai/v1/chat/completions";
 
-// ================================
-// MIDDLEWARE
-// ================================
+// Models
+const TEXT_MODEL = "llama-3.3-70b-versatile";
+const VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 
-app.use(express.json({
-  limit: "15mb"
-}));
-
+// Middleware
+app.use(express.json({ limit: "15mb" }));
 app.use(express.static(__dirname));
 
-
-// ================================
-// HOME
-// ================================
-
+// Home
 app.get("/", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "index.html")
-  );
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-
-// ================================
-// HEALTH CHECK
-// ================================
-
+// Health check
 app.get("/api/health", (req, res) => {
-
   res.json({
     success: true,
     message: "BaatAI server is running",
-    groq: !!process.env.GROQ_API_KEY
+    groqConfigured: Boolean(process.env.GROQ_API_KEY)
   });
-
 });
 
-
-// ================================
-// BAATAI CHAT
-// ================================
-
+// Chat API
 app.post("/api/chat", async (req, res) => {
-
   try {
+    const { message, image } = req.body || {};
 
-    const {
-      message,
-      image
-    } = req.body;
+    // Check API key
+    const apiKey = process.env.GROQ_API_KEY;
 
-
-    // --------------------------------
-    // CHECK GROQ KEY
-    // --------------------------------
-
-    if (!process.env.GROQ_API_KEY) {
-
+    if (!apiKey) {
       return res.status(500).json({
         success: false,
-        error: "GROQ_API_KEY Render Environment Variables mein nahi mili."
+        error: "Server configuration error",
+        details: "GROQ_API_KEY environment variable is missing."
       });
-
     }
 
-
-    // --------------------------------
-    // CHECK MESSAGE
-    // --------------------------------
-
+    // Validate message
     if (
-      (!message || !message.trim()) &&
+      (typeof message !== "string" || !message.trim()) &&
       !image
     ) {
-
       return res.status(400).json({
         success: false,
-        error: "Message ya image bhejiye."
+        error: "Please enter a message or provide an image."
       });
-
     }
 
-
-    // --------------------------------
-    // SELECT MODEL
-    // --------------------------------
-
-    let model =
-      "llama-3.3-70b-versatile";
-
-
-    // Image hai to vision model
-    if (image) {
-
-      model =
-        "meta-llama/llama-4-scout-17b-16e-instruct";
-
+    // Validate image format when supplied
+    if (image && (
+      typeof image !== "string" ||
+      !/^data:image\/(jpeg|jpg|png|webp|gif);base64,/i.test(image)
+    )) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid image format. Please upload a supported image."
+      });
     }
 
-
-    // --------------------------------
-    // SYSTEM PROMPT
-    // --------------------------------
+    // Select model
+    const model = image ? VISION_MODEL : TEXT_MODEL;
 
     const systemMessage = {
-
       role: "system",
+      content: `You are BaatAI, a friendly and helpful AI study assistant.
 
-      content: `
-You are BaatAI, a friendly and helpful AI Study Assistant.
+Help users with studies, programming, mathematics, English,
+general knowledge, writing, and everyday questions.
 
-Your job is to help students and general users with:
-
-- School and college studies
-- Programming and coding
-- Python
-- Mathematics
-- English learning
-- Indian Constitution
-- General knowledge
-- Stories
-- Shayari
-- Writing
-- Daily questions
-- Ideas and explanations
-
-Important rules:
-
-1. Be helpful and polite.
-2. Understand Hindi, Hinglish and English.
-3. If the user asks in Hindi, answer mainly in Hindi.
-4. If the user asks in Hinglish, answer in simple Hinglish.
-5. Explain difficult topics in simple language.
-6. For coding questions, provide working code with explanation.
-7. Don't unnecessarily make answers very long.
-8. Use headings and bullet points when useful.
-9. If an image is provided, carefully analyze it and answer according to the user's question.
-10. Never reveal your API key or server secrets.
-
-You are BaatAI.
-`
+Rules:
+1. Understand Hindi, Hinglish, and English.
+2. Reply in the language used by the user.
+3. Explain difficult topics simply.
+4. Provide working code for programming questions.
+5. Be polite, accurate, and helpful.
+6. Analyze provided images when asked.
+7. Never reveal API keys or server secrets.`
     };
 
-
-    // --------------------------------
-    // USER MESSAGE
-    // --------------------------------
-
+    // Build user message
     let userMessage;
 
+    if (image) {
+      const content = [];
 
-    // TEXT ONLY
-    if (!image) {
+      content.push({
+        type: "text",
+        text:
+          typeof message === "string" && message.trim()
+            ? message.trim()
+            : "Please analyze this image and explain what it shows."
+      });
+
+      content.push({
+        type: "image_url",
+        image_url: {
+          url: image
+        }
+      });
 
       userMessage = {
         role: "user",
-        content: message
+        content
       };
-
-    }
-
-
-    // TEXT + IMAGE
-    else {
-
+    } else {
       userMessage = {
-
         role: "user",
-
-        content: [
-
-          {
-            type: "text",
-            text:
-              message ||
-              "Is image ko analyze karke mujhe batao."
-          },
-
-          {
-            type: "image_url",
-
-            image_url: {
-              url: image
-            }
-
-          }
-
-        ]
-
+        content: message.trim()
       };
-
     }
 
-
-    // --------------------------------
-    // GROQ REQUEST
-    // --------------------------------
-
-    const response = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-
-        method: "POST",
-
-        headers: {
-
-          "Content-Type": "application/json",
-
-          "Authorization":
-            `Bearer ${process.env.GROQ_API_KEY}`
-
-        },
-
-        body: JSON.stringify({
-
-          model: model,
-
-          messages: [
-            systemMessage,
-            userMessage
-          ],
-
-          temperature: 0.7,
-
-          max_completion_tokens: 2048
-
-        })
-
-      }
-    );
-
-
-    // --------------------------------
-    // GROQ ERROR
-    // --------------------------------
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-      console.error(
-        "Groq API Error:",
-        errorText
-      );
-
-      return res.status(response.status).json({
-
-        success: false,
-
-        error:
-          "Groq API error",
-
-        details:
-          errorText
-
-      });
-
-    }
-
-
-    // --------------------------------
-    // RESPONSE
-    // --------------------------------
-
-    const data =
-      await response.json();
-
-
-    const reply =
-      data?.choices?.[0]?.message?.content;
-
-
-    if (!reply) {
-
-      return res.status(500).json({
-
-        success: false,
-
-        error:
-          "Groq se valid response nahi mila."
-
-      });
-
-    }
-
-
-    // --------------------------------
-    // SEND TO FRONTEND
-    // --------------------------------
-
-    res.json({
-
-      success: true,
-
-      reply: reply,
-
-      model: model
-
+    // Request Groq
+    const response = await fetch(GROQ_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model,
+        messages: [systemMessage, userMessage],
+        temperature: 0.7,
+        max_completion_tokens: 2048
+      }),
+      signal: AbortSignal.timeout(60000)
     });
 
+    // Handle Groq API errors
+    if (!response.ok) {
+      const errorText = await response.text();
+
+      // Log diagnostic information without exposing the API key
+      console.error("Groq API Error:", {
+        status: response.status,
+        body: errorText
+      });
+
+      let groqMessage = "Groq API request failed.";
+
+      try {
+        const parsed = JSON.parse(errorText);
+        groqMessage =
+          parsed?.error?.message || groqMessage;
+      } catch (_) {
+        // Response was not JSON
+      }
+
+      return res.status(502).json({
+        success: false,
+        error: "Groq API error",
+        details: groqMessage,
+        status: response.status
+      });
+    }
+
+    // Parse response
+    const data = await response.json();
+
+    const reply = data?.choices?.[0]?.message?.content;
+
+    if (typeof reply !== "string" || !reply.trim()) {
+      console.error("Unexpected Groq response:", data);
+
+      return res.status(502).json({
+        success: false,
+        error: "Groq returned an empty or invalid response."
+      });
+    }
+
+    // Return successful response
+    return res.json({
+      success: true,
+      reply: reply.trim(),
+      model
+    });
 
   } catch (error) {
+    console.error("BaatAI Server Error:", error);
 
-    console.error(
-      "BaatAI Server Error:",
-      error
-    );
+    if (error.name === "TimeoutError" ||
+        error.name === "AbortError") {
+      return res.status(504).json({
+        success: false,
+        error: "Groq request timed out. Please try again."
+      });
+    }
 
-    res.status(500).json({
-
+    return res.status(500).json({
       success: false,
-
-      error:
-        "Server mein problem aa gayi.",
-
-      details:
-        error.message
-
+      error: "Server mein problem aa gayi.",
+      details: error.message
     });
-
   }
-
 });
 
-
-// ================================
-// 404
-// ================================
-
+// 404 handler
 app.use((req, res) => {
-
   res.status(404).json({
-
     success: false,
-
     error: "Page not found"
-
   });
-
 });
 
-
-// ================================
-// START SERVER
-// ================================
-
+// Start server
 app.listen(PORT, () => {
-
-  console.log(
-    `BaatAI running on port ${PORT}`
-  );
-
+  console.log(`BaatAI running on port ${PORT}`);
 });
