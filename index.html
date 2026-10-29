@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BaatAI - AI Study Assistant</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>BaatAI - AI Assistant | Study, Coding, Stories & Ideas</title>
 
 <meta name="description"
-content="BaatAI - Your AI Study Assistant for study, coding, stories, ideas and daily questions.">
+      content="BaatAI एक AI Assistant है जो study, coding, stories, ideas और रोज़मर्रा के सवालों में आपकी मदद करता है.">
 
-<link rel="icon" href="/baatai-logo-2.png">
+<meta name="robots" content="index, follow">
+
+<link rel="canonical"
+      href="https://baatai-static-web.onrender.com/">
+
+<link rel="icon"
+      type="image/png"
+      href="/baatai-logo.png?v=3">
+
+<link rel="shortcut icon"
+      type="image/png"
+      href="/baatai-logo.png?v=3">
+
+<link rel="apple-touch-icon"
+      href="/baatai-logo.png">
+
 
 <style>
 
@@ -17,634 +35,63 @@ content="BaatAI - Your AI Study Assistant for study, coding, stories, ideas and 
    RESET
 ========================= */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-
-:root {
-  --cyan: #00eaff;
-  --bg: #010609;
-  --text: #f3f8fa;
-  --muted: #8ca5aa;
-  --border: rgba(0, 234, 255, .45);
-}
-
-
-/* =========================
-   BODY
-========================= */
 
 html,
-body {
-  width: 100%;
-  height: 100%;
+body{
+    width:100%;
+    height:100%;
 }
 
-body {
-  min-height: 100vh;
-  background: #010609;
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  overflow: hidden;
-}
-
-
-/* =========================
-   FUTURISTIC BACKGROUND
-========================= */
-
-.network-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-
-  background:
-    radial-gradient(circle at 10% 15%, rgba(0,234,255,.18) 0 2px, transparent 3px),
-    radial-gradient(circle at 30% 40%, rgba(0,234,255,.15) 0 2px, transparent 3px),
-    radial-gradient(circle at 70% 25%, rgba(0,234,255,.18) 0 2px, transparent 3px),
-    radial-gradient(circle at 90% 70%, rgba(0,234,255,.15) 0 2px, transparent 3px),
-    linear-gradient(125deg,#010507,#001116,#020a0d,#000506);
-
-  background-size:
-    170px 170px,
-    220px 220px,
-    190px 190px,
-    250px 250px,
-    100% 100%;
-
-  animation: bgMove 20s linear infinite;
-}
-
-.network-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background-image:
-    linear-gradient(30deg,
-      transparent 48%,
-      rgba(0,234,255,.07) 49%,
-      transparent 50%),
-    linear-gradient(150deg,
-      transparent 48%,
-      rgba(0,234,255,.06) 49%,
-      transparent 50%);
-
-  background-size: 230px 180px;
-}
-
-@keyframes bgMove {
-  0% {
-    background-position: 0 0;
-  }
-
-  50% {
-    background-position: 100px 50px;
-  }
-
-  100% {
-    background-position: 0 0;
-  }
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#020817;
+    color:#fff;
+    overflow:hidden;
 }
 
 
 /* =========================
-   GLOW
+   BACKGROUND
 ========================= */
 
-.glow {
-  position: fixed;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: .12;
-  pointer-events: none;
-  z-index: 1;
+#bgVideo{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-3;
+    pointer-events:none;
 }
 
-.glow1 {
-  background: #00eaff;
-  left: -120px;
-  top: 25%;
-}
-
-.glow2 {
-  background: #006bff;
-  right: -120px;
-  bottom: 15%;
+.videoOverlay{
+    position:fixed;
+    inset:0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,5,18,.94),
+            rgba(0,15,30,.86)
+        );
+    z-index:-2;
+    pointer-events:none;
 }
 
 
 /* =========================
-   MAIN
+   APP
 ========================= */
 
-main {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  height: 100vh;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-  position: relative;
-  z-index: 50;
-
-  height: 112px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 18px 30px;
-
-  background: rgba(1,7,10,.78);
-
-  border-bottom: 1px solid rgba(0,234,255,.15);
-
-  backdrop-filter: blur(15px);
-}
-
-
-/* MENU */
-
-.menu-btn {
-  width: 55px;
-  height: 55px;
-
-  border: none;
-  background: transparent;
-
-  color: white;
-
-  font-size: 40px;
-
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-right: 15px;
-
-  touch-action: manipulation;
-}
-
-
-/* BRAND */
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-logo {
-  font-size: 38px;
-}
-
-.brand-name {
-  font-size: 32px;
-  font-weight: 500;
-}
-
-.brand-sub {
-  color: var(--cyan);
-  font-size: 16px;
-  margin-top: 3px;
-}
-
-
-/* HEADER RIGHT */
-
-.header-right {
-  margin-left: auto;
-
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-}
-
-
-/* THEME */
-
-.theme-btn {
-  height: 60px;
-
-  padding: 0 20px;
-
-  border: 1px solid rgba(0,234,255,.4);
-
-  border-radius: 17px;
-
-  background: rgba(0,20,25,.7);
-
-  color: white;
-
-  font-size: 18px;
-
-  display: flex;
-  align-items: center;
-  gap: 9px;
-
-  cursor: pointer;
-
-  touch-action: manipulation;
-}
-
-.theme-btn span:first-child {
-  font-size: 27px;
-}
-
-
-/* PROFILE */
-
-.profile-btn {
-  width: 58px;
-  height: 58px;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(0,234,255,.45);
-
-  background: rgba(0,234,255,.1);
-
-  color: white;
-
-  font-size: 22px;
-
-  cursor: pointer;
-
-  touch-action: manipulation;
-}
-
-
-/* =========================
-   PROFILE POPUP
-========================= */
-
-#profilePopup {
-  display: none;
-
-  position: absolute;
-
-  right: 25px;
-  top: 90px;
-
-  width: 230px;
-
-  padding: 20px;
-
-  background: rgba(2,15,19,.98);
-
-  border: 1px solid var(--border);
-
-  border-radius: 18px;
-
-  text-align: center;
-
-  box-shadow: 0 15px 50px rgba(0,0,0,.6);
-
-  z-index: 100;
-}
-
-#profilePopup.show {
-  display: block;
-}
-
-.profile-big {
-  width: 55px;
-  height: 55px;
-
-  margin: auto auto 10px;
-
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid var(--cyan);
-
-  background: rgba(0,234,255,.12);
-
-  font-size: 22px;
-}
-
-#profilePopup strong {
-  display: block;
-  font-size: 18px;
-}
-
-#profilePopup small {
-  display: block;
-  color: #6e8c91;
-  margin-top: 5px;
-}
-
-.profile-line {
-  height: 1px;
-  background: rgba(255,255,255,.1);
-  margin: 15px 0;
-}
-
-#profilePopup span {
-  color: #7d999e;
-  font-size: 12px;
-}
-
-
-/* =========================
-   CHAT AREA
-========================= */
-
-#chatArea {
-  position: relative;
-  z-index: 5;
-
-  height: calc(100vh - 112px);
-
-  overflow-y: auto;
-
-  padding: 35px 30px 190px;
-
-  scroll-behavior: smooth;
-}
-
-
-/* =========================
-   WELCOME
-========================= */
-
-#welcome {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.welcome-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 15px;
-
-  color: var(--cyan);
-
-  font-size: 30px;
-  font-weight: 500;
-}
-
-.welcome-title span {
-  width: 100px;
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--cyan)
-  );
-}
-
-.welcome-title span:last-child {
-  transform: rotate(180deg);
-}
-
-.welcome-sub {
-  margin-top: 8px;
-
-  color: #57747a;
-
-  font-size: 13px;
-}
-
-
-/* =========================
-   MESSAGES
-========================= */
-
-#messages {
-  max-width: 900px;
-  margin: auto;
-}
-
-.message {
-  display: flex;
-  margin: 18px 0;
-}
-
-.user-message {
-  justify-content: flex-end;
-}
-
-.ai-message {
-  justify-content: flex-start;
-}
-
-.bubble {
-  max-width: 78%;
-
-  padding: 20px 28px;
-
-  border: 1px solid rgba(0,234,255,.45);
-
-  background: rgba(3,20,24,.82);
-
-  backdrop-filter: blur(12px);
-
-  border-radius: 25px;
-
-  font-size: 19px;
-
-  line-height: 1.7;
-
-  overflow-wrap: break-word;
-}
-
-.user-message .bubble {
-  border-radius: 25px 25px 5px 25px;
-
-  background: rgba(0,42,48,.7);
-}
-
-.ai-message .bubble {
-  border-radius: 25px 25px 25px 5px;
-}
-
-.hello {
-  font-size: 23px;
-}
-
-
-/* =========================
-   INPUT
-========================= */
-
-.input-wrapper {
-  position: fixed;
-
-  z-index: 40;
-
-  left: 20px;
-  right: 20px;
-  bottom: 15px;
-
-  max-width: 1050px;
-
-  margin: auto;
-}
-
-.input-box {
-  min-height: 82px;
-
-  padding: 9px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  border: 1px solid rgba(0,234,255,.4);
-
-  border-radius: 42px;
-
-  background: rgba(2,13,17,.95);
-
-  backdrop-filter: blur(18px);
-
-  box-shadow: 0 10px 40px rgba(0,0,0,.45);
-}
-
-
-/* ICON BUTTON */
-
-.icon-btn {
-  flex: 0 0 auto;
-
-  width: 58px;
-  height: 58px;
-
-  border-radius: 50%;
-
-  border: 1px solid rgba(0,234,255,.3);
-
-  background: rgba(0,234,255,.07);
-
-  color: white;
-
-  font-size: 23px;
-
-  cursor: pointer;
-
-  touch-action: manipulation;
-}
-
-.icon-btn:active {
-  transform: scale(.94);
-}
-
-
-/* TEXTAREA */
-
-textarea {
-  flex: 1;
-
-  width: 100%;
-
-  resize: none;
-
-  max-height: 130px;
-
-  background: transparent;
-
-  border: none;
-
-  outline: none;
-
-  color: white;
-
-  font-size: 18px;
-
-  padding: 15px 8px;
-
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-textarea::placeholder {
-  color: #72858a;
-}
-
-
-/* SEND */
-
-.send-btn {
-  flex: 0 0 auto;
-
-  width: 64px;
-  height: 64px;
-
-  border-radius: 50%;
-
-  border: none;
-
-  background: white;
-
-  color: #02080b;
-
-  font-size: 30px;
-
-  cursor: pointer;
-
-  touch-action: manipulation;
-
-  transition: .2s;
-}
-
-.send-btn:active {
-  transform: scale(.92);
-}
-
-
-/* =========================
-   IMAGE PREVIEW
-========================= */
-
-#imagePreview {
-  text-align: center;
-}
-
-#imagePreview img {
-  max-width: 150px;
-  max-height: 100px;
-
-  margin: 5px;
-
-  border-radius: 12px;
-
-  border: 1px solid var(--cyan);
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer-text {
-  text-align: center;
-
-  color: #486268;
-
-  font-size: 10px;
-
-  margin-top: 5px;
+.app{
+    width:100%;
+    height:100vh;
+    display:flex;
+    position:relative;
 }
 
 
@@ -652,135 +99,850 @@ textarea::placeholder {
    SIDEBAR
 ========================= */
 
-aside {
-  position: fixed;
+.sidebar{
+    width:270px;
+    height:100%;
+    flex-shrink:0;
 
-  left: 0;
-  top: 0;
-  bottom: 0;
+    background:rgba(3,12,28,.96);
 
-  width: 275px;
+    border-right:
+        1px solid rgba(0,220,255,.16);
 
-  padding: 25px 18px;
+    padding:16px;
 
-  background: rgba(2,12,16,.98);
+    display:flex;
+    flex-direction:column;
 
-  border-right: 1px solid var(--border);
-
-  z-index: 200;
-
-  transform: translateX(-100%);
-
-  transition: transform .3s ease;
-}
-
-aside.open {
-  transform: translateX(0);
-}
-
-.side-logo {
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-
-  margin-bottom: 35px;
-}
-
-.robot {
-  font-size: 38px;
-}
-
-.side-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.side-sub {
-  color: var(--cyan);
-  font-size: 13px;
-}
-
-
-/* SIDEBAR BUTTONS */
-
-.new-chat,
-.side-btn {
-  width: 100%;
-
-  padding: 14px;
-
-  margin-bottom: 12px;
-
-  border-radius: 14px;
-
-  border: 1px solid rgba(0,234,255,.25);
-
-  background: rgba(0,234,255,.06);
-
-  color: white;
-
-  text-align: left;
-
-  font-size: 15px;
-
-  cursor: pointer;
-
-  touch-action: manipulation;
-}
-
-.new-chat:active,
-.side-btn:active {
-  transform: scale(.98);
-}
-
-
-/* HISTORY */
-
-.history-title {
-  margin-top: 30px;
-  margin-bottom: 12px;
-
-  font-size: 11px;
-
-  color: #63858b;
-
-  letter-spacing: 2px;
-}
-
-.history-item {
-  padding: 10px;
-
-  border-radius: 10px;
-
-  color: #a9c0c5;
-
-  font-size: 13px;
-
-  margin-bottom: 5px;
-
-  cursor: pointer;
+    position:relative;
+    z-index:50;
 }
 
 
 /* =========================
-   OVERLAY
+   BRAND
 ========================= */
 
-#overlay {
-  display: none;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
 
-  position: fixed;
-
-  inset: 0;
-
-  background: rgba(0,0,0,.6);
-
-  z-index: 150;
+    padding:7px 3px 20px;
 }
 
-#overlay.show {
-  display: block;
+.brandLogo{
+    width:48px;
+    height:48px;
+
+    object-fit:cover;
+
+    border-radius:14px;
+
+    box-shadow:
+        0 0 22px rgba(0,220,255,.25);
+}
+
+.brandName{
+    font-size:21px;
+    font-weight:800;
+}
+
+.brandSub{
+    margin-top:3px;
+    font-size:12px;
+    color:#65e7ff;
+}
+
+
+/* =========================
+   SIDEBAR BUTTONS
+========================= */
+
+.sideBtn{
+    width:100%;
+    min-height:46px;
+
+    border:
+        1px solid rgba(0,220,255,.14);
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:#fff;
+
+    padding:10px 13px;
+
+    margin-bottom:9px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    transition:.2s;
+}
+
+.sideBtn:hover{
+    background:
+        rgba(0,220,255,.10);
+
+    border-color:
+        rgba(0,220,255,.32);
+}
+
+.sideBtn.primary{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,210,255,.20),
+            rgba(0,120,255,.15)
+        );
+}
+
+.sideIcon{
+    margin-right:8px;
+}
+
+
+/* =========================
+   HISTORY TITLE
+========================= */
+
+.historyTitle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin:
+        14px 4px 9px;
+
+    color:#6ceaff;
+
+    font-size:12px;
+    font-weight:bold;
+
+    letter-spacing:.6px;
+}
+
+.historyCount{
+    min-width:20px;
+    height:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+        rgba(0,220,255,.12);
+
+    color:#72eaff;
+
+    font-size:10px;
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+.history{
+    flex:1;
+    overflow-y:auto;
+
+    padding-right:3px;
+}
+
+.history::-webkit-scrollbar{
+    width:4px;
+}
+
+.history::-webkit-scrollbar-thumb{
+    background:#17566b;
+    border-radius:10px;
+}
+
+
+/* HISTORY ITEM */
+
+.historyItem{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    padding:11px 10px;
+
+    margin-bottom:6px;
+
+    border-radius:10px;
+
+    color:#cbd9e7;
+
+    font-size:13px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.historyItem:hover{
+    background:
+        rgba(0,220,255,.09);
+
+    color:#fff;
+}
+
+.historyItem.active{
+    background:
+        rgba(0,220,255,.13);
+
+    color:#fff;
+
+    border-left:
+        2px solid #36dfff;
+}
+
+.historyIcon{
+    flex-shrink:0;
+}
+
+.historyText{
+    min-width:0;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+
+/* EMPTY HISTORY */
+
+.emptyHistory{
+    padding:15px 7px;
+
+    text-align:center;
+
+    color:#657a8e;
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    flex:1;
+    min-width:0;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    position:relative;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    height:70px;
+    min-height:70px;
+
+    display:flex;
+    align-items:center;
+
+    padding:
+        10px 18px;
+
+    background:
+        rgba(1,8,20,.78);
+
+    border-bottom:
+        1px solid rgba(0,220,255,.12);
+
+    backdrop-filter:blur(12px);
+
+    z-index:20;
+}
+
+.headerLeft{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.menuBtn{
+    display:none;
+
+    width:42px;
+    height:42px;
+
+    border:0;
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:#fff;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.headerLogo{
+    width:38px;
+    height:38px;
+
+    object-fit:cover;
+
+    border-radius:11px;
+}
+
+.headerTitle{
+    font-size:17px;
+    font-weight:700;
+}
+
+.headerStatus{
+    margin-top:2px;
+
+    color:#67e9ff;
+
+    font-size:11px;
+}
+
+.headerStatus::before{
+    content:"";
+
+    display:inline-block;
+
+    width:7px;
+    height:7px;
+
+    margin-right:5px;
+
+    border-radius:50%;
+
+    background:#20e890;
+
+    box-shadow:
+        0 0 8px #20e890;
+}
+
+
+/* =========================
+   CHAT AREA
+========================= */
+
+.chatArea{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:
+        28px 20px 150px;
+
+    scroll-behavior:smooth;
+}
+
+.chatArea::-webkit-scrollbar{
+    width:5px;
+}
+
+.chatArea::-webkit-scrollbar-thumb{
+    background:#16495b;
+    border-radius:10px;
+}
+
+.chatContainer{
+    max-width:900px;
+    margin:auto;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+    min-height:
+        calc(100vh - 240px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.welcomeBox{
+    width:100%;
+    max-width:650px;
+    padding:20px;
+}
+
+.welcomeLogo{
+    width:105px;
+    height:105px;
+
+    object-fit:cover;
+
+    border-radius:28px;
+
+    margin-bottom:18px;
+
+    box-shadow:
+        0 0 30px rgba(0,220,255,.20);
+}
+
+.welcome h1{
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.welcome h1 span{
+    color:#48e7ff;
+}
+
+.welcome p{
+    color:#a9bacb;
+
+    line-height:1.6;
+
+    font-size:14px;
+}
+
+
+/* =========================
+   SUGGESTIONS
+========================= */
+
+.suggestions{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+
+    margin-top:25px;
+}
+
+.suggestion{
+    padding:13px;
+
+    border:
+        1px solid rgba(0,220,255,.12);
+
+    background:
+        rgba(255,255,255,.04);
+
+    border-radius:12px;
+
+    color:#dcefff;
+
+    text-align:left;
+
+    font-size:13px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.suggestion:hover{
+    background:
+        rgba(0,220,255,.10);
+
+    border-color:
+        rgba(0,220,255,.30);
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.messageRow{
+    display:flex;
+
+    gap:11px;
+
+    margin-bottom:22px;
+}
+
+.messageRow.user{
+    justify-content:flex-end;
+}
+
+.messageAvatar{
+    width:34px;
+    height:34px;
+
+    min-width:34px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+}
+
+.aiAvatar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#0b2637;
+
+    font-size:17px;
+}
+
+.messageContent{
+    max-width:
+        min(78%,700px);
+}
+
+.messageBubble{
+    padding:
+        13px 15px;
+
+    border-radius:15px;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+    overflow-wrap:anywhere;
+}
+
+.messageRow.ai .messageBubble{
+    background:
+        rgba(7,23,39,.92);
+
+    border:
+        1px solid rgba(0,220,255,.08);
+}
+
+.messageRow.user .messageBubble{
+    background:
+        linear-gradient(
+            135deg,
+            #075d77,
+            #073e65
+        );
+
+    border:
+        1px solid rgba(0,220,255,.15);
+}
+
+.messageImage{
+    display:block;
+
+    max-width:300px;
+    max-height:300px;
+
+    margin-top:8px;
+
+    border-radius:12px;
+}
+
+.messageTime{
+    margin-top:5px;
+
+    color:#63778c;
+
+    font-size:10px;
+}
+
+
+/* =========================
+   CODE
+========================= */
+
+.messageBubble pre{
+    overflow-x:auto;
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border-radius:10px;
+
+    background:#020811;
+}
+
+.messageBubble code{
+    font-family:
+        Consolas,
+        monospace;
+}
+
+
+/* =========================
+   TYPING
+========================= */
+
+.typing{
+    display:flex;
+    gap:5px;
+    padding:3px;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#4edfff;
+
+    animation:
+        typing 1s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+
+    0%,100%{
+        opacity:.25;
+        transform:translateY(0);
+    }
+
+    50%{
+        opacity:1;
+        transform:translateY(-3px);
+    }
+
+}
+
+
+/* =========================
+   INPUT AREA
+========================= */
+
+.inputArea{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    padding:
+        15px 20px 20px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(1,7,18,.99),
+            rgba(1,7,18,.88),
+            transparent
+        );
+
+    z-index:15;
+}
+
+.inputBox{
+    max-width:900px;
+    margin:auto;
+}
+
+.composer{
+    min-height:60px;
+
+    display:flex;
+    align-items:flex-end;
+
+    padding:8px;
+
+    border:
+        1px solid rgba(0,220,255,.20);
+
+    border-radius:18px;
+
+    background:
+        rgba(5,18,32,.96);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.35);
+}
+
+#messageInput{
+    flex:1;
+
+    min-width:0;
+
+    max-height:130px;
+
+    resize:none;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    color:#fff;
+
+    padding:11px;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    line-height:1.5;
+}
+
+#messageInput::placeholder{
+    color:#70869a;
+}
+
+.composerButtons{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.iconBtn{
+    width:42px;
+    height:42px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    color:#d8f7ff;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.iconBtn:hover{
+    background:
+        rgba(0,220,255,.12);
+}
+
+.iconBtn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.iconBtn svg{
+    width:21px;
+    height:21px;
+
+    fill:none;
+
+    stroke:currentColor;
+
+    stroke-width:1.8;
+}
+
+.sendBtn{
+    background:
+        linear-gradient(
+            135deg,
+            #00c9ed,
+            #0879d8
+        );
+}
+
+.sendBtn:hover{
+    filter:brightness(1.12);
+}
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+.imagePreview{
+    display:none;
+
+    position:relative;
+
+    padding:8px;
+
+    margin-bottom:7px;
+
+    border:
+        1px solid rgba(0,220,255,.15);
+
+    border-radius:13px;
+
+    background:
+        rgba(5,18,32,.95);
+}
+
+.imagePreview.show{
+    display:block;
+}
+
+.imagePreview img{
+    width:70px;
+    height:70px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+}
+
+.removeImage{
+    position:absolute;
+
+    left:67px;
+    top:2px;
+
+    width:22px;
+    height:22px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#e23a4e;
+
+    color:#fff;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   MIC
+========================= */
+
+.micBtn.listening{
+    background:#d9294b;
+
+    box-shadow:
+        0 0 18px rgba(217,41,75,.4);
 }
 
 
@@ -788,39 +950,87 @@ aside.open {
    LIGHT MODE
 ========================= */
 
-body.light {
-  background: #eaf8fa;
-  color: #071418;
+body.light{
+    background:#eef7fb;
+    color:#102033;
 }
 
-body.light header {
-  background: rgba(240,255,255,.9);
+body.light .sidebar{
+    background:
+        rgba(245,252,255,.98);
+
+    border-color:#d5e7ee;
 }
 
-body.light .network-bg {
-  opacity: .25;
-  filter: invert(1);
+body.light .brandName,
+body.light .headerTitle{
+    color:#102033;
 }
 
-body.light .bubble {
-  background: rgba(255,255,255,.85);
-  color: #071418;
+body.light .sideBtn{
+    color:#183047;
+
+    background:#fff;
+
+    border-color:#d8e8ee;
 }
 
-body.light .input-box {
-  background: rgba(255,255,255,.9);
+body.light .historyItem{
+    color:#476075;
 }
 
-body.light textarea {
-  color: #071418;
+body.light .historyItem:hover,
+body.light .historyItem.active{
+    color:#183047;
+
+    background:#e5f5fa;
 }
 
-body.light .theme-btn {
-  color: #071418;
+body.light .header{
+    background:
+        rgba(255,255,255,.92);
+
+    border-color:#d5e7ee;
 }
 
-body.light .menu-btn {
-  color: #071418;
+body.light .chatArea{
+    background:#eef7fb;
+}
+
+body.light .messageRow.ai .messageBubble{
+    color:#172b3e;
+
+    background:#fff;
+
+    border-color:#dbeaf0;
+}
+
+body.light .inputArea{
+    background:
+        linear-gradient(
+            to top,
+            rgba(238,247,251,.99),
+            rgba(238,247,251,.85),
+            transparent
+        );
+}
+
+body.light .composer{
+    background:#fff;
+
+    border-color:#cfe3eb;
+}
+
+body.light #messageInput{
+    color:#14283a;
+}
+
+body.light .suggestion{
+    color:#183047;
+
+    background:#fff;
+
+    border-color:#d8e8ee;
 }
 
 
@@ -828,135 +1038,102 @@ body.light .menu-btn {
    MOBILE
 ========================= */
 
-@media (max-width:700px) {
+@media(max-width:800px){
 
-  header {
-    height: 92px;
-    padding: 10px 12px;
-  }
+    .sidebar{
+        position:fixed;
 
-  .menu-btn {
-    width: 48px;
-    height: 48px;
+        left:-285px;
 
-    font-size: 34px;
+        top:0;
+        bottom:0;
 
-    margin-right: 6px;
-  }
+        z-index:80;
 
-  .brand-logo {
-    font-size: 30px;
-  }
+        transition:.25s;
 
-  .brand-name {
-    font-size: 25px;
-  }
+        box-shadow:
+            15px 0 40px rgba(0,0,0,.35);
+    }
 
-  .brand-sub {
-    font-size: 12px;
-  }
+    .sidebar.open{
+        left:0;
+    }
 
-  .header-right {
-    gap: 7px;
-  }
+    .menuBtn{
+        display:block;
+    }
 
-  .theme-btn {
-    height: 48px;
+    .inputArea{
+        left:0;
 
-    padding: 0 12px;
+        padding:
+            10px 10px 13px;
+    }
 
-    font-size: 14px;
-  }
+    .chatArea{
+        padding:
+            20px 12px 125px;
+    }
 
-  .theme-btn span:first-child {
-    font-size: 21px;
-  }
+    .header{
+        padding:
+            9px 11px;
+    }
 
-  .profile-btn {
-    width: 48px;
-    height: 48px;
-  }
+    .welcome h1{
+        font-size:27px;
+    }
 
-  #chatArea {
-    height: calc(100vh - 92px);
+    .welcomeLogo{
+        width:85px;
+        height:85px;
+    }
 
-    padding: 25px 15px 175px;
-  }
+    .messageContent{
+        max-width:87%;
+    }
 
-  .welcome-title {
-    font-size: 25px;
-  }
+    .messageBubble{
+        font-size:13px;
+    }
 
-  .welcome-title span {
-    width: 45px;
-  }
+    .headerTitle{
+        font-size:15px;
+    }
 
-  .bubble {
-    max-width: 90%;
-
-    padding: 16px 18px;
-
-    font-size: 17px;
-  }
-
-  .hello {
-    font-size: 19px;
-  }
-
-  .input-wrapper {
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
-  }
-
-  .input-box {
-    min-height: 68px;
-    padding: 7px;
-  }
-
-  .icon-btn {
-    width: 48px;
-    height: 48px;
-
-    font-size: 20px;
-  }
-
-  .send-btn {
-    width: 53px;
-    height: 53px;
-
-    font-size: 25px;
-  }
-
-  textarea {
-    font-size: 16px;
-    padding: 10px 3px;
-  }
+    .suggestions{
+        grid-template-columns:1fr;
+    }
 
 }
 
 
-/* VERY SMALL MOBILE */
+/* =========================
+   SMALL MOBILE
+========================= */
 
-@media (max-width:390px) {
+@media(max-width:430px){
 
-  .brand-name {
-    font-size: 22px;
-  }
+    .composer{
+        border-radius:15px;
+    }
 
-  .brand-sub {
-    font-size: 10px;
-  }
+    .iconBtn{
+        width:38px;
+        height:38px;
+    }
 
-  .theme-btn span:last-child {
-    display: none;
-  }
+    .iconBtn svg{
+        width:19px;
+        height:19px;
+    }
 
-  .theme-btn {
-    width: 48px;
-    padding: 0;
-    justify-content: center;
-  }
+    #messageInput{
+        font-size:13px;
+        padding:
+            9px 6px;
+    }
 
 }
 
@@ -966,869 +1143,914 @@ body.light .menu-btn {
 
 <body>
 
-<!-- BACKGROUND -->
-<div class="network-bg"></div>
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
 
+<!-- =========================
+     BACKGROUND VIDEO
+========================= -->
 
-<!-- SIDEBAR -->
+<video
+    id="bgVideo"
+    autoplay
+    muted
+    loop
+    playsinline
+>
 
-<aside id="sidebar">
+    <source
+        src="/background.mp4"
+        type="video/mp4"
+    >
 
-  <div class="side-logo">
+</video>
 
-    <div class="robot">
-      🤖
-    </div>
+<div class="videoOverlay"></div>
 
-    <div>
-      <div class="side-title">
-        BaatAI
-      </div>
 
-      <div class="side-sub">
-        AI Study Assistant
-      </div>
-    </div>
 
-  </div>
+<div class="app">
 
 
-  <button
-    type="button"
-    class="new-chat"
-    onclick="newChat()">
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
-    ＋ New Chat
-
-  </button>
-
-
-  <button
-    type="button"
-    class="side-btn"
-    onclick="clearChat()">
-
-    🗑️ Clear History
-
-  </button>
-
-
-  <button
-    type="button"
-    class="side-btn"
-    onclick="toggleTheme()">
-
-    ☀️ Light / Dark
-
-  </button>
-
-
-  <div class="history-title">
-    CHATS
-  </div>
-
-  <div id="chatHistory"></div>
-
-</aside>
-
-
-<!-- OVERLAY -->
-
-<div
-  id="overlay"
-  onclick="closeSidebar()">
-</div>
-
-
-<!-- MAIN -->
-
-<main>
-
-
-<!-- HEADER -->
-
-<header>
-
-  <button
-    type="button"
-    class="menu-btn"
-    onclick="openSidebar()"
-    aria-label="Open menu">
-
-    ☰
-
-  </button>
-
-
-  <div class="brand">
-
-    <div class="brand-logo">
-      🤖
-    </div>
-
-    <div>
-
-      <div class="brand-name">
-        BaatAI
-      </div>
-
-      <div class="brand-sub">
-        AI Study Assistant
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="header-right">
-
-    <button
-      type="button"
-      class="theme-btn"
-      onclick="toggleTheme()">
-
-      <span>☀️</span>
-      <span>Light</span>
-
-    </button>
-
-
-    <button
-      type="button"
-      class="profile-btn"
-      onclick="toggleProfile()">
-
-      S
-
-    </button>
-
-  </div>
-
-
-  <!-- PROFILE -->
-
-  <div id="profilePopup">
-
-    <div class="profile-big">
-      S
-    </div>
-
-    <strong>
-      Guest
-    </strong>
-
-    <small>
-      Public access
-    </small>
-
-    <div class="profile-line"></div>
-
-    <span>
-      Login / Signup coming later
-    </span>
-
-  </div>
-
-</header>
-
-
-<!-- CHAT -->
-
-<section id="chatArea">
-
-
-  <div id="welcome">
-
-    <div class="welcome-title">
-
-      <span></span>
-
-      Welcome
-
-      <span></span>
-
-    </div>
-
-    <div class="welcome-sub">
-      Your AI Study Assistant
-    </div>
-
-  </div>
-
-
-  <!-- MESSAGES -->
-
-  <div id="messages">
-
-    <div class="message user-message">
-
-      <div class="bubble">
-        Hi
-      </div>
-
-    </div>
-
-
-    <div class="message ai-message">
-
-      <div class="bubble">
-
-        <div class="hello">
-          Hello! 👋 I am your AI Study Buddy.
-        </div>
-
-        <br>
-
-        How can I help you today?
-
-        <br><br>
-
-        Whether you want to understand a tricky
-        school/college concept, learn coding,
-        practice English, create stories or get
-        ideas, I've got your back!
-
-        <br><br>
-
-        <strong>
-          Bataiye, kya padhna hai? 😊
-        </strong>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- INPUT -->
-
-<div class="input-wrapper">
-
-
-  <div class="input-box">
-
-
-    <!-- CAMERA -->
-
-    <button
-      type="button"
-      class="icon-btn camera-btn"
-      onclick="openImagePicker()"
-      title="Upload image"
-      aria-label="Upload image">
-
-      📷
-
-    </button>
-
-
-    <input
-      type="file"
-      id="imageInput"
-      accept="image/*"
-      hidden
+    <aside
+        class="sidebar"
+        id="sidebar"
     >
 
 
-    <!-- MESSAGE -->
+        <!-- BRAND -->
 
-    <textarea
-      id="messageInput"
-      placeholder="Type your message..."
-      rows="1"
-      oninput="autoResize(this)"
-      onkeydown="handleKey(event)">
-    </textarea>
+        <div class="brand">
 
+            <img
+                src="/baatai-logo.png"
+                class="brandLogo"
+                alt="BaatAI Logo"
+            >
 
-    <!-- MIC -->
+            <div>
 
-    <button
-      type="button"
-      class="icon-btn mic-btn"
-      onclick="startVoice()"
-      title="Voice input"
-      aria-label="Voice input">
+                <div class="brandName">
+                    BaatAI
+                </div>
 
-      🎤
+                <div class="brandSub">
+                    AI Study Assistant
+                </div>
 
-    </button>
+            </div>
 
-
-    <!-- SEND -->
-
-    <button
-      type="button"
-      class="send-btn"
-      onclick="sendMessage()"
-      aria-label="Send message">
-
-      ➤
-
-    </button>
-
-  </div>
+        </div>
 
 
-  <!-- IMAGE PREVIEW -->
+        <!-- NEW CHAT -->
 
-  <div id="imagePreview"></div>
+        <button
+            class="sideBtn primary"
+            id="newChatBtn"
+            type="button"
+        >
+
+            <span class="sideIcon">
+                ＋
+            </span>
+
+            New Chat
+
+        </button>
 
 
-  <div class="footer-text">
-    BaatAI can make mistakes. Check important information.
-  </div>
+        <!-- CLEAR HISTORY -->
+
+        <button
+            class="sideBtn"
+            id="clearHistoryBtn"
+            type="button"
+        >
+
+            <span class="sideIcon">
+                🗑️
+            </span>
+
+            Clear History
+
+        </button>
+
+
+        <!-- THEME -->
+
+        <button
+            class="sideBtn"
+            id="themeBtn"
+            type="button"
+        >
+
+            <span
+                class="sideIcon"
+                id="themeIcon"
+            >
+                🌙
+            </span>
+
+            <span id="themeText">
+                Light / Dark
+            </span>
+
+        </button>
+
+
+        <!-- HISTORY TITLE -->
+
+        <div class="historyTitle">
+
+            <span>
+                CHAT HISTORY
+            </span>
+
+            <span
+                class="historyCount"
+                id="historyCount"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div
+            class="history"
+            id="history"
+        ></div>
+
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="headerLeft">
+
+
+                <button
+                    class="menuBtn"
+                    id="menuBtn"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+
+                <img
+                    src="/baatai-logo.png"
+                    class="headerLogo"
+                    alt="BaatAI"
+                >
+
+
+                <div>
+
+                    <div class="headerTitle">
+                        BaatAI
+                    </div>
+
+                    <div class="headerStatus">
+                        AI Assistant
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             CHAT AREA
+        ========================== -->
+
+        <section
+            class="chatArea"
+            id="chatArea"
+        >
+
+            <div
+                class="chatContainer"
+                id="chatContainer"
+            >
+
+                <!-- WELCOME WILL BE CREATED BY JS -->
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             INPUT
+        ========================== -->
+
+        <div class="inputArea">
+
+            <div class="inputBox">
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <div
+                    class="imagePreview"
+                    id="imagePreview"
+                >
+
+                    <img
+                        id="previewImage"
+                        src=""
+                        alt="Selected image"
+                    >
+
+                    <button
+                        class="removeImage"
+                        id="removeImage"
+                        type="button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+
+                <!-- COMPOSER -->
+
+                <div class="composer">
+
+
+                    <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="BaatAI से कुछ भी पूछें..."
+                        autocomplete="off"
+                    ></textarea>
+
+
+                    <div class="composerButtons">
+
+
+                        <!-- IMAGE BUTTON -->
+
+                        <button
+                            class="iconBtn"
+                            id="cameraBtn"
+                            title="Upload Image"
+                            type="button"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="6"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                ></rect>
+
+                                <circle
+                                    cx="12"
+                                    cy="13"
+                                    r="3"
+                                ></circle>
+
+                                <path
+                                    d="M8 6l1.5-2h5L16 6"
+                                ></path>
+
+                            </svg>
+
+                        </button>
+
+
+
+                        <!-- MIC BUTTON -->
+
+                        <button
+                            class="iconBtn micBtn"
+                            id="micBtn"
+                            title="Voice Input"
+                            type="button"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                            >
+
+                                <rect
+                                    x="9"
+                                    y="3"
+                                    width="6"
+                                    height="11"
+                                    rx="3"
+                                ></rect>
+
+                                <path
+                                    d="M5 11a7 7 0 0 0 14 0"
+                                ></path>
+
+                                <path
+                                    d="M12 18v3"
+                                ></path>
+
+                                <path
+                                    d="M8 21h8"
+                                ></path>
+
+                            </svg>
+
+                        </button>
+
+
+
+                        <!-- SEND BUTTON -->
+
+                        <button
+                            class="iconBtn sendBtn"
+                            id="sendBtn"
+                            title="Send"
+                            type="button"
+                        >
+
+                            <svg
+                                viewBox="0 0 24 24"
+                            >
+
+                                <path
+                                    d="M3 20L21 12 3 4l3 7 9 1-9 1z"
+                                ></path>
+
+                            </svg>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- HIDDEN IMAGE INPUT -->
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    hidden
+                >
+
+
+            </div>
+
+        </div>
+
+
+    </main>
 
 </div>
 
-
-</main>
 
 
 <script>
 
-/* =====================================
-   BAATAI JAVASCRIPT
-   ===================================== */
+/* =====================================================
+   BAATAI
+   NO LOGIN / NO SIGNUP
+   LOCAL CHAT HISTORY
+===================================================== */
+
+
+/* =========================
+   API
+========================= */
+
+const API = "";
+
+
+/* =========================
+   STORAGE
+========================= */
+
+const CHATS_KEY =
+    "baatai-local-chats-v2";
+
+const THEME_KEY =
+    "baatai-theme";
 
 
 /* =========================
    VARIABLES
 ========================= */
 
-let selectedImage = null;
+let currentChatId = null;
+
+let currentImage = null;
+
+let isSending = false;
+
+let recognition = null;
+
+let isListening = false;
 
 
 /* =========================
-   SIDEBAR
+   ELEMENTS
 ========================= */
 
-function openSidebar() {
-
-  const sidebar =
+const sidebar =
     document.getElementById("sidebar");
 
-  const overlay =
-    document.getElementById("overlay");
+const menuBtn =
+    document.getElementById("menuBtn");
 
-  sidebar.classList.add("open");
+const messageInput =
+    document.getElementById("messageInput");
 
-  overlay.classList.add("show");
-}
+const sendBtn =
+    document.getElementById("sendBtn");
 
+const cameraBtn =
+    document.getElementById("cameraBtn");
 
-function closeSidebar() {
+const imageInput =
+    document.getElementById("imageInput");
 
-  const sidebar =
-    document.getElementById("sidebar");
+const imagePreview =
+    document.getElementById("imagePreview");
 
-  const overlay =
-    document.getElementById("overlay");
+const previewImage =
+    document.getElementById("previewImage");
 
-  sidebar.classList.remove("open");
+const removeImage =
+    document.getElementById("removeImage");
 
-  overlay.classList.remove("show");
-}
+const micBtn =
+    document.getElementById("micBtn");
 
+const chatArea =
+    document.getElementById("chatArea");
 
-/* =========================
-   PROFILE
-========================= */
+const chatContainer =
+    document.getElementById("chatContainer");
 
-function toggleProfile() {
+const history =
+    document.getElementById("history");
 
-  const popup =
-    document.getElementById("profilePopup");
+const historyCount =
+    document.getElementById("historyCount");
 
-  popup.classList.toggle("show");
-}
+const newChatBtn =
+    document.getElementById("newChatBtn");
 
+const clearHistoryBtn =
+    document.getElementById("clearHistoryBtn");
 
-/* =========================
-   THEME
-========================= */
+const themeBtn =
+    document.getElementById("themeBtn");
 
-function toggleTheme() {
+const themeIcon =
+    document.getElementById("themeIcon");
 
-  document.body.classList.toggle("light");
-
-  const isLight =
-    document.body.classList.contains("light");
-
-  localStorage.setItem(
-    "baatai-theme",
-    isLight ? "light" : "dark"
-  );
-}
-
-
-/* LOAD THEME */
-
-if (
-  localStorage.getItem("baatai-theme") === "light"
-) {
-
-  document.body.classList.add("light");
-
-}
+const themeText =
+    document.getElementById("themeText");
 
 
 /* =========================
-   TEXTAREA
+   GET CHATS
 ========================= */
 
-function autoResize(element) {
+function getChats(){
 
-  element.style.height = "auto";
+    try{
 
-  element.style.height =
-    Math.min(element.scrollHeight, 130) + "px";
+        const saved =
+            localStorage.getItem(
+                CHATS_KEY
+            );
 
-}
+        if(!saved){
+            return [];
+        }
 
+        const chats =
+            JSON.parse(saved);
 
-/* =========================
-   ENTER TO SEND
-========================= */
+        return Array.isArray(chats)
+            ? chats
+            : [];
 
-function handleKey(event) {
+    }catch(error){
 
-  if (
-    event.key === "Enter" &&
-    !event.shiftKey
-  ) {
+        console.error(
+            "History read error:",
+            error
+        );
 
-    event.preventDefault();
+        return [];
 
-    sendMessage();
-
-  }
+    }
 
 }
 
 
 /* =========================
-   IMAGE PICKER
+   SAVE CHATS
 ========================= */
 
-function openImagePicker() {
+function saveChats(chats){
 
-  document
-    .getElementById("imageInput")
-    .click();
+    try{
+
+        localStorage.setItem(
+            CHATS_KEY,
+            JSON.stringify(chats)
+        );
+
+        return true;
+
+    }catch(error){
+
+        console.error(
+            "History save error:",
+            error
+        );
+
+        alert(
+            "Chat history save नहीं हो पाई। Browser storage full हो सकता है।"
+        );
+
+        return false;
+
+    }
 
 }
 
 
-/* IMAGE SELECTED */
+/* =========================
+   CREATE CHAT
+========================= */
 
-document
-  .getElementById("imageInput")
-  .addEventListener(
-    "change",
-    handleImage
-  );
+function createChat(title = "New Chat"){
+
+    const chats =
+        getChats();
 
 
-function handleImage(event) {
+    const chat = {
 
-  const file =
-    event.target.files[0];
+        id:
+            Date.now().toString() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .slice(2,9),
 
-  if (!file) {
-    return;
-  }
+        title:
+            title || "New Chat",
 
-  selectedImage = file;
+        messages:[],
 
-  const reader =
-    new FileReader();
+        createdAt:
+            Date.now(),
 
-  reader.onload =
-    function(event) {
-
-      document.getElementById(
-        "imagePreview"
-      ).innerHTML = `
-
-        <img
-          src="${event.target.result}"
-          alt="Selected image"
-        >
-
-      `;
+        updatedAt:
+            Date.now()
 
     };
 
-  reader.readAsDataURL(file);
+
+    chats.unshift(chat);
+
+    saveChats(chats);
+
+
+    return chat;
 
 }
 
 
 /* =========================
-   ADD MESSAGE
+   CURRENT CHAT
 ========================= */
 
-function addMessage(text, type) {
+function getCurrentChat(){
 
-  const messages =
-    document.getElementById("messages");
-
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "message " +
-    (
-      type === "user"
-        ? "user-message"
-        : "ai-message"
-    );
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    "bubble";
-
-  bubble.innerHTML =
-    formatText(text);
-
-  div.appendChild(bubble);
-
-  messages.appendChild(div);
-
-  scrollBottom();
-
-}
-
-
-/* =========================
-   SAFE TEXT
-========================= */
-
-function formatText(text) {
-
-  if (!text) {
-    return "";
-  }
-
-  return String(text)
-
-    .replace(/&/g, "&amp;")
-
-    .replace(/</g, "&lt;")
-
-    .replace(/>/g, "&gt;")
-
-    .replace(/\n/g, "<br>");
-
-}
-
-
-/* =========================
-   FILE → BASE64
-========================= */
-
-function fileToBase64(file) {
-
-  return new Promise(
-    function(resolve, reject) {
-
-      const reader =
-        new FileReader();
-
-      reader.onload =
-        function() {
-
-          resolve(
-            reader.result
-          );
-
-        };
-
-      reader.onerror =
-        reject;
-
-      reader.readAsDataURL(file);
-
+    if(!currentChatId){
+        return null;
     }
-  );
+
+
+    const chats =
+        getChats();
+
+
+    return chats.find(
+        chat =>
+            chat.id ===
+            currentChatId
+    ) || null;
 
 }
 
 
 /* =========================
-   SEND MESSAGE
+   UPDATE CHAT
 ========================= */
 
-async function sendMessage() {
+function updateChat(chat){
 
-  const input =
-    document.getElementById(
-      "messageInput"
-    );
-
-  const message =
-    input.value.trim();
+    const chats =
+        getChats();
 
 
-  if (
-    !message &&
-    !selectedImage
-  ) {
-
-    return;
-
-  }
-
-
-  /* USER MESSAGE */
-
-  if (message) {
-
-    addMessage(
-      message,
-      "user"
-    );
-
-  }
-
-
-  /* RESET INPUT */
-
-  input.value = "";
-
-  input.style.height =
-    "auto";
-
-
-  /* IMAGE */
-
-  let imageBase64 = null;
-
-
-  if (selectedImage) {
-
-    try {
-
-      imageBase64 =
-        await fileToBase64(
-          selectedImage
+    const index =
+        chats.findIndex(
+            item =>
+                item.id === chat.id
         );
 
-      addMessage(
-        "📷 Image attached",
-        "user"
-      );
 
-    } catch (error) {
-
-      console.error(
-        "Image error:",
-        error
-      );
-
-    }
-
-    selectedImage = null;
-
-    document.getElementById(
-      "imagePreview"
-    ).innerHTML = "";
-
-    document.getElementById(
-      "imageInput"
-    ).value = "";
-
-  }
-
-
-  /* THINKING */
-
-  const messages =
-    document.getElementById(
-      "messages"
-    );
-
-
-  const thinking =
-    document.createElement(
-      "div"
-    );
-
-
-  thinking.className =
-    "message ai-message";
-
-
-  thinking.id =
-    "thinking";
-
-
-  thinking.innerHTML = `
-
-    <div class="bubble">
-
-      BaatAI is thinking... 🤖
-
-    </div>
-
-  `;
-
-
-  messages.appendChild(
-    thinking
-  );
-
-
-  scrollBottom();
-
-
-  /* API REQUEST */
-
-  try {
-
-    const response =
-      await fetch(
-        "/api/chat",
-        {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-
-          body: JSON.stringify({
-
-            message:
-              message,
-
-            image:
-              imageBase64
-
-          })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    /* REMOVE THINKING */
-
-    const thinkingElement =
-      document.getElementById(
-        "thinking"
-      );
-
-
-    if (thinkingElement) {
-
-      thinkingElement.remove();
-
+    if(index === -1){
+        return;
     }
 
 
-    /* AI RESPONSE */
-
-    if (data.reply) {
-
-      addMessage(
-        data.reply,
-        "ai"
-      );
-
-    } else {
-
-      addMessage(
-
-        data.error ||
-        "Sorry, mujhe response nahi mila.",
-
-        "ai"
-
-      );
-
-    }
+    chats[index] =
+        chat;
 
 
-  } catch (error) {
-
-    console.error(
-      "Chat error:",
-      error
-    );
-
-
-    const thinkingElement =
-      document.getElementById(
-        "thinking"
-      );
-
-
-    if (thinkingElement) {
-
-      thinkingElement.remove();
-
-    }
-
-
-    addMessage(
-
-      "⚠️ Server se connection nahi ho pa raha. Please Render server check karein.",
-
-      "ai"
-
-    );
-
-  }
-
-
-  /* HISTORY */
-
-  if (message) {
-
-    saveHistory(
-      message
-    );
-
-  }
+    saveChats(chats);
 
 }
 
 
 /* =========================
-   SCROLL
+   DELETE ALL HISTORY
 ========================= */
 
-function scrollBottom() {
+function deleteAllHistory(){
 
-  const area =
-    document.getElementById(
-      "chatArea"
+    localStorage.removeItem(
+        CHATS_KEY
     );
 
+    currentChatId =
+        null;
 
-  setTimeout(
-    function() {
+    renderHistory();
 
-      area.scrollTop =
-        area.scrollHeight;
+    showWelcome();
 
-    },
-    50
-  );
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function renderHistory(){
+
+    const chats =
+        getChats();
+
+
+    history.innerHTML =
+        "";
+
+
+    historyCount.textContent =
+        chats.length;
+
+
+    if(chats.length === 0){
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        empty.className =
+            "emptyHistory";
+
+        empty.innerHTML =
+            "अभी कोई chat नहीं है।<br>New Chat से शुरू करें।";
+
+        history.appendChild(
+            empty
+        );
+
+        return;
+
+    }
+
+
+    chats.forEach(
+        function(chat){
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.className =
+                "historyItem";
+
+
+            if(
+                chat.id ===
+                currentChatId
+            ){
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            const icon =
+                document.createElement(
+                    "span"
+                );
+
+            icon.className =
+                "historyIcon";
+
+            icon.textContent =
+                "💬";
+
+
+            const text =
+                document.createElement(
+                    "span"
+                );
+
+            text.className =
+                "historyText";
+
+            text.textContent =
+                chat.title ||
+                "New Chat";
+
+
+            item.appendChild(
+                icon
+            );
+
+            item.appendChild(
+                text
+            );
+
+
+            item.addEventListener(
+                "click",
+                function(){
+
+                    openChat(
+                        chat.id
+                    );
+
+                    if(
+                        window.innerWidth <=
+                        800
+                    ){
+
+                        sidebar.classList.remove(
+                            "open"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            history.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+function showWelcome(){
+
+    chatContainer.innerHTML =
+        `
+
+        <div class="welcome">
+
+            <div class="welcomeBox">
+
+                <img
+                    src="/baatai-logo.png"
+                    class="welcomeLogo"
+                    alt="BaatAI Logo"
+                >
+
+                <h1>
+                    Welcome to
+                    <span>BaatAI</span>
+                </h1>
+
+                <p>
+                    Study, coding, stories, ideas और
+                    रोज़मर्रा के सवालों के लिए
+                    BaatAI से पूछें।
+                </p>
+
+
+                <div class="suggestions">
+
+                    <div
+                        class="suggestion"
+                        data-text="मुझे JavaScript आसान भाषा में समझाओ"
+                    >
+                        💻 JavaScript आसान भाषा में समझाओ
+                    </div>
+
+
+                    <div
+                        class="suggestion"
+                        data-text="आज मुझे पढ़ाई का एक अच्छा timetable बनाकर दो"
+                    >
+                        📚 मेरे लिए study timetable बनाओ
+                    </div>
+
+
+                    <div
+                        class="suggestion"
+                        data-text="एक motivational shayari लिखो"
+                    >
+                        ✨ एक motivational shayari लिखो
+                    </div>
+
+
+                    <div
+                        class="suggestion"
+                        data-text="मुझे एक creative business idea बताओ"
+                    >
+                        💡 एक creative idea बताओ
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+
+    document
+        .querySelectorAll(".suggestion")
+        .forEach(
+            function(button){
+
+                button.addEventListener(
+                    "click",
+                    function(){
+
+                        useSuggestion(
+                            button.dataset.text
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 }
 
@@ -1837,352 +2059,1211 @@ function scrollBottom() {
    NEW CHAT
 ========================= */
 
-function newChat() {
+function startNewChat(){
 
-  document.getElementById(
-    "messages"
-  ).innerHTML = "";
-
-
-  document.getElementById(
-    "messageInput"
-  ).value = "";
+    const chat =
+        createChat(
+            "New Chat"
+        );
 
 
-  document.getElementById(
-    "messageInput"
-  ).style.height =
-    "auto";
+    currentChatId =
+        chat.id;
 
 
-  selectedImage =
-    null;
+    showWelcome();
+
+    renderHistory();
 
 
-  document.getElementById(
-    "imagePreview"
-  ).innerHTML = "";
+    messageInput.value =
+        "";
+
+    messageInput.style.height =
+        "auto";
 
 
-  document.getElementById(
-    "imageInput"
-  ).value = "";
+    hideImagePreview();
 
 
-  closeSidebar();
+    messageInput.focus();
 
 }
+
+
+/* =========================
+   OPEN CHAT
+========================= */
+
+function openChat(chatId){
+
+    const chats =
+        getChats();
+
+
+    const chat =
+        chats.find(
+            item =>
+                item.id ===
+                chatId
+        );
+
+
+    if(!chat){
+        return;
+    }
+
+
+    currentChatId =
+        chatId;
+
+
+    chatContainer.innerHTML =
+        "";
+
+
+    if(
+        !chat.messages ||
+        chat.messages.length === 0
+    ){
+
+        showWelcome();
+
+    }else{
+
+        chat.messages.forEach(
+            function(message){
+
+                renderMessage(
+                    message.role,
+                    message.content,
+                    message.imageData,
+                    message.createdAt,
+                    false
+                );
+
+            }
+        );
+
+    }
+
+
+    renderHistory();
+
+    scrollBottom();
+
+}
+
+
+/* =========================
+   SAVE MESSAGE
+========================= */
+
+function saveMessage(
+    role,
+    content,
+    imageData = null
+){
+
+    let chat =
+        getCurrentChat();
+
+
+    if(!chat){
+
+        chat =
+            createChat(
+                "New Chat"
+            );
+
+        currentChatId =
+            chat.id;
+
+    }
+
+
+    if(
+        role === "user" &&
+        chat.messages.length === 0
+    ){
+
+        let title =
+            (
+                content ||
+                "Image Chat"
+            )
+            .trim()
+            .replace(/\s+/g," ")
+            .slice(0,50);
+
+
+        if(!title){
+            title = "New Chat";
+        }
+
+
+        chat.title =
+            title;
+
+    }
+
+
+    chat.messages.push({
+
+        role:
+            role,
+
+        content:
+            content || "",
+
+        imageData:
+            imageData || null,
+
+        createdAt:
+            Date.now()
+
+    });
+
+
+    chat.updatedAt =
+        Date.now();
+
+
+    updateChat(
+        chat
+    );
+
+
+    renderHistory();
+
+}
+
+
+/* =========================
+   RENDER MESSAGE
+========================= */
+
+function renderMessage(
+    role,
+    content,
+    imageData = null,
+    createdAt = Date.now(),
+    shouldScroll = true
+){
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+
+    row.className =
+        "messageRow " +
+        (
+            role === "user"
+                ? "user"
+                : "ai"
+        );
+
+
+    /* AI AVATAR */
+
+    if(role !== "user"){
+
+        const avatar =
+            document.createElement(
+                "div"
+            );
+
+        avatar.className =
+            "messageAvatar aiAvatar";
+
+        avatar.textContent =
+            "🤖";
+
+
+        row.appendChild(
+            avatar
+        );
+
+    }
+
+
+    /* CONTENT */
+
+    const contentBox =
+        document.createElement(
+            "div"
+        );
+
+    contentBox.className =
+        "messageContent";
+
+
+    const bubble =
+        document.createElement(
+            "div"
+        );
+
+    bubble.className =
+        "messageBubble";
+
+    bubble.textContent =
+        content || "";
+
+
+    contentBox.appendChild(
+        bubble
+    );
+
+
+    /* IMAGE */
+
+    if(imageData){
+
+        const img =
+            document.createElement(
+                "img"
+            );
+
+        img.className =
+            "messageImage";
+
+        img.src =
+            imageData;
+
+        img.alt =
+            "Uploaded image";
+
+
+        contentBox.appendChild(
+            img
+        );
+
+    }
+
+
+    /* TIME */
+
+    const time =
+        document.createElement(
+            "div"
+        );
+
+    time.className =
+        "messageTime";
+
+    time.textContent =
+        new Date(
+            createdAt ||
+            Date.now()
+        ).toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    contentBox.appendChild(
+        time
+    );
+
+
+    row.appendChild(
+        contentBox
+    );
+
+
+    /* USER AVATAR */
+
+    if(role === "user"){
+
+        const avatar =
+            document.createElement(
+                "img"
+            );
+
+        avatar.className =
+            "messageAvatar";
+
+        avatar.src =
+            "/baatai-logo.png";
+
+        avatar.alt =
+            "You";
+
+
+        row.appendChild(
+            avatar
+        );
+
+    }
+
+
+    chatContainer.appendChild(
+        row
+    );
+
+
+    if(shouldScroll){
+
+        scrollBottom();
+
+    }
+
+}
+
+
+/* =========================
+   SCROLL
+========================= */
+
+function scrollBottom(){
+
+    setTimeout(
+        function(){
+
+            chatArea.scrollTop =
+                chatArea.scrollHeight;
+
+        },
+        20
+    );
+
+}
+
+
+/* =========================
+   TYPING
+========================= */
+
+function showTyping(){
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.className =
+        "messageRow ai";
+
+    row.id =
+        "typingMessage";
+
+
+    const avatar =
+        document.createElement(
+            "div"
+        );
+
+    avatar.className =
+        "messageAvatar aiAvatar";
+
+    avatar.textContent =
+        "🤖";
+
+
+    const bubble =
+        document.createElement(
+            "div"
+        );
+
+    bubble.className =
+        "messageBubble";
+
+
+    bubble.innerHTML =
+        `
+
+        <div class="typing">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+        `;
+
+
+    row.appendChild(
+        avatar
+    );
+
+    row.appendChild(
+        bubble
+    );
+
+
+    chatContainer.appendChild(
+        row
+    );
+
+
+    scrollBottom();
+
+}
+
+
+function removeTyping(){
+
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
+
+
+    if(typing){
+        typing.remove();
+    }
+
+}
+
+
+/* =========================
+   API CONTEXT
+========================= */
+
+function getConversation(){
+
+    const chat =
+        getCurrentChat();
+
+
+    if(
+        !chat ||
+        !chat.messages
+    ){
+
+        return [];
+
+    }
+
+
+    return chat.messages
+        .slice(-20)
+        .map(
+            function(message){
+
+                return {
+
+                    role:
+                        message.role === "user"
+                            ? "user"
+                            : "assistant",
+
+                    content:
+                        message.content || ""
+
+                };
+
+            }
+        );
+
+}
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+async function sendMessage(){
+
+    if(isSending){
+        return;
+    }
+
+
+    const text =
+        messageInput.value.trim();
+
+
+    if(
+        !text &&
+        !currentImage
+    ){
+
+        return;
+
+    }
+
+
+    /* CREATE CHAT */
+
+    if(!currentChatId){
+
+        const chat =
+            createChat(
+                "New Chat"
+            );
+
+        currentChatId =
+            chat.id;
+
+    }
+
+
+    isSending =
+        true;
+
+    sendBtn.disabled =
+        true;
+
+
+    const userText =
+        text;
+
+
+    const userImage =
+        currentImage;
+
+
+    /* CLEAR INPUT */
+
+    messageInput.value =
+        "";
+
+    messageInput.style.height =
+        "auto";
+
+
+    /* USER MESSAGE */
+
+    renderMessage(
+        "user",
+        userText ||
+            "Image भेजी गई है।",
+        userImage
+    );
+
+
+    saveMessage(
+        "user",
+        userText ||
+            "Image भेजी गई है।",
+        userImage
+    );
+
+
+    hideImagePreview();
+
+
+    /* TYPING */
+
+    showTyping();
+
+
+    try{
+
+        const response =
+            await fetch(
+                API +
+                "/api/chat",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            message:
+                                userText,
+
+                            image:
+                                userImage,
+
+                            conversation:
+                                getConversation()
+
+                        })
+
+                }
+            );
+
+
+        const raw =
+            await response.text();
+
+
+        let data = {};
+
+
+        try{
+
+            data =
+                raw
+                    ? JSON.parse(raw)
+                    : {};
+
+        }catch(error){
+
+            throw new Error(
+                "Server ने invalid response दिया।"
+            );
+
+        }
+
+
+        if(!response.ok){
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "AI response नहीं मिला।"
+            );
+
+        }
+
+
+        const reply =
+            data.reply ||
+            data.message ||
+            "मुझे कोई जवाब नहीं मिला।";
+
+
+        removeTyping();
+
+
+        renderMessage(
+            "ai",
+            reply
+        );
+
+
+        saveMessage(
+            "assistant",
+            reply
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "BaatAI Error:",
+            error
+        );
+
+
+        removeTyping();
+
+
+        const errorMessage =
+            "⚠️ BaatAI अभी response नहीं दे पाया।\n\n" +
+            (
+                error.message ||
+                "कृपया थोड़ी देर बाद फिर कोशिश करें।"
+            );
+
+
+        renderMessage(
+            "ai",
+            errorMessage
+        );
+
+
+        saveMessage(
+            "assistant",
+            errorMessage
+        );
+
+    }finally{
+
+        isSending =
+            false;
+
+        sendBtn.disabled =
+            false;
+
+        messageInput.focus();
+
+    }
+
+}
+
+
+/* =========================
+   SEND BUTTON
+========================= */
+
+sendBtn.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+messageInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" &&
+            !event.shiftKey
+        ){
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   TEXTAREA AUTO SIZE
+========================= */
+
+messageInput.addEventListener(
+    "input",
+    function(){
+
+        this.style.height =
+            "auto";
+
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                130
+            ) +
+            "px";
+
+    }
+);
+
+
+/* =========================
+   SUGGESTION
+========================= */
+
+function useSuggestion(text){
+
+    messageInput.value =
+        text;
+
+
+    messageInput.dispatchEvent(
+        new Event("input")
+    );
+
+
+    messageInput.focus();
+
+}
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+function showImagePreview(data){
+
+    currentImage =
+        data;
+
+
+    previewImage.src =
+        data;
+
+
+    imagePreview.classList.add(
+        "show"
+    );
+
+}
+
+
+function hideImagePreview(){
+
+    currentImage =
+        null;
+
+
+    previewImage.src =
+        "";
+
+
+    imagePreview.classList.remove(
+        "show"
+    );
+
+
+    imageInput.value =
+        "";
+
+}
+
+
+/* =========================
+   IMAGE BUTTON
+========================= */
+
+cameraBtn.addEventListener(
+    "click",
+    function(){
+
+        imageInput.click();
+
+    }
+);
+
+
+/* =========================
+   IMAGE SELECT
+========================= */
+
+imageInput.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            imageInput.files[0];
+
+
+        if(!file){
+            return;
+        }
+
+
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
+
+            alert(
+                "कृपया image file select करें।"
+            );
+
+            return;
+
+        }
+
+
+        if(
+            file.size >
+            12 * 1024 * 1024
+        ){
+
+            alert(
+                "Image 12MB से छोटी रखें।"
+            );
+
+            imageInput.value =
+                "";
+
+            return;
+
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event){
+
+                showImagePreview(
+                    event.target.result
+                );
+
+            };
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+    }
+);
+
+
+/* =========================
+   REMOVE IMAGE
+========================= */
+
+removeImage.addEventListener(
+    "click",
+    hideImagePreview
+);
 
 
 /* =========================
    CLEAR HISTORY
 ========================= */
 
-function clearChat() {
+clearHistoryBtn.addEventListener(
+    "click",
+    function(){
 
-  const answer =
-    confirm(
-      "Kya aap chat history clear karna chahte hain?"
-    );
-
-
-  if (!answer) {
-    return;
-  }
+        const chats =
+            getChats();
 
 
-  localStorage.removeItem(
-    "baatai-history"
-  );
+        if(chats.length === 0){
+
+            alert(
+                "अभी कोई chat history नहीं है।"
+            );
+
+            return;
+
+        }
 
 
-  document.getElementById(
-    "chatHistory"
-  ).innerHTML = "";
+        const confirmed =
+            confirm(
+                "क्या आप सभी Chat History delete करना चाहते हैं?"
+            );
 
 
-  newChat();
-
-}
-
-
-/* =========================
-   SAVE HISTORY
-========================= */
-
-function saveHistory(message) {
-
-  if (!message) {
-    return;
-  }
+        if(!confirmed){
+            return;
+        }
 
 
-  let history;
-
-
-  try {
-
-    history =
-      JSON.parse(
-        localStorage.getItem(
-          "baatai-history"
-        ) || "[]"
-      );
-
-  } catch {
-
-    history = [];
-
-  }
-
-
-  history.unshift(
-    message
-  );
-
-
-  history =
-    history.slice(
-      0,
-      10
-    );
-
-
-  localStorage.setItem(
-    "baatai-history",
-    JSON.stringify(history)
-  );
-
-
-  renderHistory();
-
-}
-
-
-/* =========================
-   RENDER HISTORY
-========================= */
-
-function renderHistory() {
-
-  const box =
-    document.getElementById(
-      "chatHistory"
-    );
-
-
-  box.innerHTML = "";
-
-
-  let history;
-
-
-  try {
-
-    history =
-      JSON.parse(
-        localStorage.getItem(
-          "baatai-history"
-        ) || "[]"
-      );
-
-  } catch {
-
-    history = [];
-
-  }
-
-
-  history.forEach(
-    function(item) {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-
-      div.className =
-        "history-item";
-
-
-      div.textContent =
-        "💬 " +
-        item.substring(
-          0,
-          30
-        ) +
-        (
-          item.length > 30
-            ? "..."
-            : ""
-        );
-
-
-      box.appendChild(
-        div
-      );
+        deleteAllHistory();
 
     }
-  );
+);
+
+
+/* =========================
+   NEW CHAT BUTTON
+========================= */
+
+newChatBtn.addEventListener(
+    "click",
+    function(){
+
+        startNewChat();
+
+
+        if(
+            window.innerWidth <=
+            800
+        ){
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   THEME
+========================= */
+
+function updateThemeButton(){
+
+    const isLight =
+        document.body.classList.contains(
+            "light"
+        );
+
+
+    if(isLight){
+
+        themeIcon.textContent =
+            "☀️";
+
+        themeText.textContent =
+            "Dark Mode";
+
+    }else{
+
+        themeIcon.textContent =
+            "🌙";
+
+        themeText.textContent =
+            "Light Mode";
+
+    }
+
+}
+
+
+themeBtn.addEventListener(
+    "click",
+    function(){
+
+        document.body.classList.toggle(
+            "light"
+        );
+
+
+        const isLight =
+            document.body.classList.contains(
+                "light"
+            );
+
+
+        localStorage.setItem(
+            THEME_KEY,
+            isLight
+                ? "light"
+                : "dark"
+        );
+
+
+        updateThemeButton();
+
+    }
+);
+
+
+/* =========================
+   LOAD THEME
+========================= */
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            THEME_KEY
+        );
+
+
+    if(theme === "light"){
+
+        document.body.classList.add(
+            "light"
+        );
+
+    }
+
+
+    updateThemeButton();
 
 }
 
 
 /* =========================
-   VOICE
+   MOBILE MENU
 ========================= */
 
-function startVoice() {
+menuBtn.addEventListener(
+    "click",
+    function(){
 
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-
-  if (!SpeechRecognition) {
-
-    alert(
-      "Aapke browser mein voice input supported nahi hai."
-    );
-
-    return;
-
-  }
-
-
-  const recognition =
-    new SpeechRecognition();
-
-
-  recognition.lang =
-    "hi-IN";
-
-
-  recognition.continuous =
-    false;
-
-
-  recognition.interimResults =
-    false;
-
-
-  recognition.onstart =
-    function() {
-
-      const mic =
-        document.querySelector(
-          ".mic-btn"
+        sidebar.classList.toggle(
+            "open"
         );
 
-      mic.style.borderColor =
-        "#00eaff";
-
-      mic.style.boxShadow =
-        "0 0 20px rgba(0,234,255,.5)";
-
-    };
-
-
-  recognition.onresult =
-    function(event) {
-
-      const spokenText =
-        event.results[0][0].transcript;
-
-
-      const input =
-        document.getElementById(
-          "messageInput"
-        );
-
-
-      input.value +=
-        spokenText;
-
-
-      autoResize(
-        input
-      );
-
-    };
-
-
-  recognition.onerror =
-    function(event) {
-
-      console.log(
-        "Voice error:",
-        event.error
-      );
-
-    };
-
-
-  recognition.onend =
-    function() {
-
-      const mic =
-        document.querySelector(
-          ".mic-btn"
-        );
-
-
-      mic.style.borderColor =
-        "";
-
-      mic.style.boxShadow =
-        "";
-
-    };
-
-
-  recognition.start();
-
-}
+    }
+);
 
 
 /* =========================
-   INITIALIZE
-========================= */
-
-renderHistory();
-
-
-/* =========================
-   CLOSE PROFILE
-   WHEN CLICKING OUTSIDE
+   CLOSE SIDEBAR OUTSIDE
 ========================= */
 
 document.addEventListener(
-  "click",
-  function(event) {
+    "click",
+    function(event){
 
-    const popup =
-      document.getElementById(
-        "profilePopup"
-      );
-
-    const profileButton =
-      document.querySelector(
-        ".profile-btn"
-      );
+        if(
+            window.innerWidth > 800
+        ){
+            return;
+        }
 
 
-    if (
-      popup.classList.contains("show") &&
-      !popup.contains(event.target) &&
-      !profileButton.contains(event.target)
-    ) {
+        if(
+            !sidebar.classList.contains(
+                "open"
+            )
+        ){
+            return;
+        }
 
-      popup.classList.remove(
-        "show"
-      );
+
+        const clickedInside =
+            sidebar.contains(
+                event.target
+            );
+
+
+        const clickedMenu =
+            menuBtn.contains(
+                event.target
+            );
+
+
+        if(
+            !clickedInside &&
+            !clickedMenu
+        ){
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   STARTUP
+========================= */
+
+function initializeBaatAI(){
+
+    loadTheme();
+
+    renderHistory();
+
+
+    const chats =
+        getChats();
+
+
+    if(chats.length > 0){
+
+        /*
+         सबसे recent chat खोलें
+        */
+
+        currentChatId =
+            chats[0].id;
+
+
+        openChat(
+            currentChatId
+        );
+
+    }else{
+
+        /*
+         पहली बार Welcome दिखाएं
+        */
+
+        showWelcome();
 
     }
 
-  }
-);
+}
+
+
+initializeBaatAI();
 
 </script>
 
